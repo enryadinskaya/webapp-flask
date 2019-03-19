@@ -7,8 +7,7 @@ from wtforms import Form, TextField, TextAreaField, validators, StringField, Sub
 app = Flask(__name__)
 app.secret_key = 'some_secret'
 
-Message = namedtuple('Message', 'name surname email password')
-tableName = dict.fromkeys(['name','surname','email','password'])
+#Message = namedtuple('Message', 'name surname email password')
 
 
 class ReusableForm(Form):
@@ -33,13 +32,8 @@ def mainPage():
 
     if form.validate():
         flash('Thanks for registration ' + name)
-        tableName['name'] = name
-        tableName['surname'] = surname
-        tableName['email'] = email
-        tableName['password'] = password
         with open('out.txt','a') as out:
-            for key,val in tableName.items():
-                out.write('{}:{}\n'.format(key,val))
+            out.write(name+';'+surname+';'+email+';'+password+'\n')
 
     else:
         flash('Error: All the form fields are required. ')
@@ -49,15 +43,12 @@ def mainPage():
 
 @app.route("/viewData", methods=['GET'])
 def viewData():
-    newTable = []
-    d = {'name':[],'surname':[],'email':[],'password':[]}
-    with open('out.txt') as inp:
-        for i in inp.readlines():
-            key,val = i.strip().split(':')
-            d[key].append(val)
-    for k in range(len(d['name'])):
-        newTable.append(Message(d['name'][k], d['surname'][k],d['email'][k],d['password'][k]))
-    return render_template('viewData.html', newTable=newTable)
+    entities = list()
+    with open('out.txt') as f:
+        for new_line in f:
+            data = new_line.strip().split(';')
+            entities.append({'name': data[0], 'surname': data[1], 'email': data[2], 'password': data[3]})
+    return render_template('viewData.html',entities=entities)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=5001)

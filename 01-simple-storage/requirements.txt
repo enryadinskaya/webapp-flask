@@ -1,4 +1,6 @@
-name:aaa
-surname:ssss
-email:sarbo@mail.ru
-password:ASDERW
+Click==7.0
+Flask==1.0.2
+itsdangerous==1.1.0
+Jinja2==2.10
+MarkupSafe==1.1.1
+Werkzeug==0.14.1
