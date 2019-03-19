@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AWESOME APP</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <a href="/">Index</a>
+    <h1 align="center">View data</h1>
+    <p>
+        <br>
+        <br>
+    </p>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th align="left" >Name</th>
+            <th align="left">Surname</th>
+            <th align="left">Email</th>
+            <th align="left">Password</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for text in newTable %}
+        <tr>
+            <td>{{ text.name }}</td>
+            <td>{{ text.surname }}</td>
+            <td>{{ text.email }}</td>
+            <td>{{ text.password }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
+

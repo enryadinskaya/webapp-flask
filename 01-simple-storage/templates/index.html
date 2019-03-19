@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AWESOME APP</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .container{
+       width: 500px;
+       margin: auto;
+       background-color: white;
+       border: 1px solid #ddd;
+       padding: 10px;
+       }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="/viewData">View data</a>
+
+    <h1 align="center">Add Profile</h1>
+
+    <form action="/" method="post" role="form">
+
+        <div class="form-group" align="center">
+
+            <label for="name">Name:</label><br>
+            <input type="text" class="form-control" id="name" name="name" placeholder="What's your name?"><br>
+
+            <label for="name">Surname:</label><br>
+            <input type="text" class="form-control" id="surname" name="surname" placeholder="What's your surname?"><br>
+
+            <label for="email">Email:</label><br>
+            <input type="text" class="form-control" id="email" name="email" placeholder="Your email will be used to contact you."><br>
+
+            <label for="password">Password:</label><br>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Enter a password."><br>
+
+        </div>
+        <div align="center">
+        <button type="submit" class="btn btn-success">Submit</button>
+        </div>
+        <p></p><br>
+
+    </form>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+
+{% for message in messages %}
+{% if "Error" not in message[1]: %}
+    <div class="alert alert-info">
+        <strong>Success! </strong> {{ message[1] }}</div>
+{% endif %}
+
+{% if "Error" in message[1]: %}
+    <div class="alert alert-warning">
+        {{ message[1] }}</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endwith %}
+</div>
+
+</body>
+</html>
+
