@@ -3,17 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>AWESOME APP</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        .container{
-       width: 500px;
-       margin: auto;
-       background-color: white;
-       border: 1px solid #ddd;
-       padding: 10px;
-       }
-    </style>
 </head>
 <body>
 
@@ -23,8 +14,11 @@
 
         <div class="form-group" align="center">
 
-            <label for="numbers">Numbers:</label><br>
-            <input type="text" class="form-control" id="numbers" name="numbers" placeholder="Введите два числа через пробел"><br>
+            <label for="rows">Rows:</label><br>
+            <input type="text" class="form-control" id="rows" name="rows" placeholder="Введите количество строк"><br>
+
+            <label for="columns">Columns:</label><br>
+            <input type="text" class="form-control" id="columns" name="columns" placeholder="Введите количество колонок"><br>
 
         </div>
         <div align="center">
@@ -37,6 +31,7 @@
     {% for string in mas %}
         <pre>{{string}}</pre>
     {% endfor %}
+
 
 </div>
 

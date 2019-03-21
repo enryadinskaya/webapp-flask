@@ -7,50 +7,20 @@ app.secret_key = 'some_secret'
 
 
 class ReusableForm(Form):
-    numbers = TextField('Name:', validators=[validators.required()])
+    rows = TextField('Name:', validators=[validators.required()])
+    columns = TextField('Name:', validators=[validators.required()])
 
 
-def massiv(numbers):
+def massiv(line, column):
     newmassiv = list()
-    line = int(numbers[0])
-    column = int(numbers[1])
-    mas = [[0]*column for i in range(line)]
 
-    i, j = 0, 0
-    for k in range(1, ((line*column)+1)):
-        mas[i][j] = k
-        if k == line*column:
-            break
+    x,y,dx,dy, mas = 0,0,0,1, [[0]*column for i in range(line)]
+    for i in range(column*line):
+        mas[x][y]=str(i+1)
+        if x+dx>=line or x+dx<0 or y+dy>=column or y+dy<0 or mas[x+dx][y+dy]:
+            dx,dy = dy,-dx
+        x,y = x+dx, y+dy
 
-        if line < column:
-            if i <= j+1 and i+j < column-1:
-                j += 1
-            elif i < j-1 and i+j >= column-1:
-                i += 1
-            elif i >= j-1 and i+j >= column-1:
-                j -= 1
-            elif i > j+1 and i+j < column-1:
-                i -= 1
-
-        elif line == column:
-            if i <= j+1 and i+j < column-1:
-                j += 1
-            elif i < j and i+j >= column-1:
-                i += 1
-            elif i >= j and i+j > column-1:
-                j -= 1
-            elif i > j+1 and i+j <= column-1:
-                i -= 1
-
-        elif line > column:
-            if i <= j+1 and i+j < column-1:
-                j += 1
-            elif i < j+1 and i+j >= column-1:
-                i += 1
-            elif i >= j+1 and i+j > column:
-                j -= 1
-            elif i > j+1 and i+j <= column:
-                i -= 1
     for i in range(line):
         newline = ''
         for j in range(column):
@@ -65,10 +35,13 @@ def mainPage():
     form = ReusableForm(request.form)
 
     if request.method == 'POST':
-        numbers = request.form['numbers'].strip().split()
+        rows = request.form['rows'].strip()
+        columns = request.form['columns'].strip()
 
     if form.validate():
-        mas = massiv(numbers)
+        row = int(rows)
+        column = int(columns)
+        mas = massiv(row, column)
         return render_template('index.html', form=form, mas=mas)
 
     else:
