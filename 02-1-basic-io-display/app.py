@@ -54,7 +54,7 @@ def massiv(numbers):
     for i in range(line):
         newline = ''
         for j in range(column):
-            newline = newline + ' ' + str(mas[i][j])
+            newline = newline + '\t' + str(mas[i][j])
         newmassiv.append(newline)
 
     return newmassiv
