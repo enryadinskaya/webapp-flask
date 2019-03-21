@@ -7,7 +7,7 @@ app.secret_key = 'some_secret'
 
 
 class ReusableForm(Form):
-    numbers = StringField('Name:', validators=[validators.DataRequired()])
+    numbers = TextField('Name:', validators=[validators.required()])
 
 
 def massiv(numbers):
