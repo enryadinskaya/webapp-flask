@@ -1,0 +1,11 @@
+Click==7.0
+et-xmlfile==1.0.1
+Flask==1.0.2
+fpdf==1.7.2
+itsdangerous==1.1.0
+jdcal==1.4
+Jinja2==2.10
+MarkupSafe==1.1.1
+openpyxl==2.6.1
+Werkzeug==0.15.1
+WTForms==2.2.1
