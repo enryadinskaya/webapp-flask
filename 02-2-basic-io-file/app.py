@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask, render_template, request, flash, redirect, url_for, send_from_directory
 
 from wtforms import Form, TextField, validators
@@ -6,9 +8,14 @@ from openpyxl import load_workbook
 
 from fpdf import FPDF
 
+from werkzeug.utils import secure_filename
 
+
+UPLOAD_FOLDER = ''
+ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif','xlsx','xls'])
 app_new = Flask(__name__, static_folder='')
 app_new.secret_key = 'another_secret'
+app_new.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
 class ReusableForm(Form):
@@ -16,7 +23,6 @@ class ReusableForm(Form):
 
 
 def massiv(file):
-    file = 'example.xlsx'
     wb = load_workbook(file)
     mas = list()
 
@@ -64,17 +70,22 @@ def massiv(file):
 
     return filepdf
 
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+
 @app_new.route("/", methods=['GET', 'POST'])
 def mainPage():
 
     form = ReusableForm(request.form)
 
     if request.method == 'POST':
-        file = request.form['file'].strip()
-
-    if form.validate():
-        filename = massiv(file)
-        return redirect(url_for('uploaded_file', filename=filename))
+        file = request.files['file']
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app_new.config['UPLOAD_FOLDER'], filename))
+            filedoc = massiv(filename)
+            return redirect(url_for('uploaded_file', filedoc=filedoc))
 
     else:
         flash('Error: All the form fields are required. ')
@@ -82,10 +93,10 @@ def mainPage():
     return render_template('index.html', form=form)
 
 
-@app_new.route('/<path:filename>')
-def uploaded_file(filename):
+@app_new.route('/<path:filedoc>')
+def uploaded_file(filedoc):
     return send_from_directory(app_new.static_folder,
-                               filename)
+                               filedoc)
 
 if __name__ == '__main__':
     app_new.run(debug=True, host='0.0.0.0', port=5003)
