@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Delete contact{% endblock %}
+
+{% block contect %}
+
+<div class="delete">
+    Do you want to delete contact: {{contact.name}} {{contact.surname}} ?
+    <br>
+</div>
+<div class="delete_button">
+    <br>
+    <form method="post">
+        <button type="submit" value="Submit">Submit</button>
+    </form>
+</div>
+{% endblock %}

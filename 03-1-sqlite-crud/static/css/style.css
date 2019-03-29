@@ -1,0 +1,89 @@
+table {
+font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+font-size: 14px;
+border-radius: 10px;
+border-spacing: 0;
+text-align: center;
+}
+th {
+background: linear-gradient(#9595b6, #5a567f);
+color: black;
+padding: 10px 20px;
+}
+th, td {
+border-style: solid;
+border-width: 0 1px 1px 0;
+border-color: white;
+}
+th:first-child, td:first-child {
+text-align: left;
+}
+th:first-child {
+border-top-left-radius: 10px;
+}
+th:last-child {
+border-top-right-radius: 10px;
+border-right: none;
+}
+td {
+padding: 10px 20px;
+background: #ebf3f9;
+}
+tr:last-child td:first-child {
+border-radius: 0 0 0 10px;
+}
+tr:last-child td:last-child {
+border-radius: 0 0 10px 0;
+}
+tr td:last-child {
+border-right: none;
+}
+.link{
+margin-left:250px;
+}
+.modify{
+       width: 500px;
+       margin: auto;
+       background-color: white;
+       border: 1px solid #ddd;
+       padding: 10px;
+       border-radius: 10px 10px 10px 10px;
+       }
+.modify label {
+    width:150px;
+    margin-top: 3px;
+    display:inline-block;
+    float:left;
+    padding:3px;
+    font-weight: bold;
+}
+.modify input {
+    height:20px;
+    width:220px;
+    padding:5px 8px;
+    border-radius: 10px 10px 10px 10px;
+}
+.b1 {
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(#98FB98), to(#EBFFFF));
+    color: black;
+    font-size: 12pt;
+    margin-left: 230px;
+    font-weight: bold;
+    }
+.delete{
+    width: 500px;
+    margin: auto;
+    background-color: #FFF8DC;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 10px 10px 10px 10px;
+    }
+.delete_button{
+    margin-left: 580px;
+    border-radius: 10px 10px 10px 10px;}
+.delete_button button{
+background: -webkit-gradient(linear, 0 0, 0 100%, from(#DEB887), to(#FFF8DC));
+    color: black;
+    font-size: 12pt;
+    font-stretch: expanded;
+    }

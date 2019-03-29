@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block contect %}
+<form class="modify" method="post">
+    <label>Name:</label>
+    <input type="text"  class="form-control" name="name" value={{contact.name}}>
+    <br>
+    <br>
+    <label>Surname:</label>
+    <input type="text" class="form-control" name="surname" value={{contact.surname}}>
+    <br>
+    <br>
+    <label>Email:</label>
+    <input type="email" class="form-control" name="mail" value={{contact.mail}}>
+    <br>
+    <br>
+    <label>Telephone:</label>
+    <input type="tel" class="form-control" name="tel" value={{contact.tel}}>
+    <br>
+    <br>
+    <button type="submit" class="b1" value="Submit">Submit</button>
+</form>
+{% endblock %}

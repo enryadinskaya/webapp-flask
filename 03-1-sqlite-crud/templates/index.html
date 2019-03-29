@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}List of the contacts{% endblock %}
+
+{% block contect %}
+<table align="center">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Surname</th>
+        <th>Telephone</th>
+        <th>Email</th>
+        <th>Actions update</th>
+        <th>Actions create</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for contact in contact_list %}
+    <tr>
+        <td>{{contact.name}}</td>
+        <td>{{contact.surname}}</td>
+        <td>{{contact.tel}}</td>
+        <td>{{contact.mail}}</td>
+        <td>
+            <a href="./update/{{contact.id}}">Update contact</a>
+        </td>
+        <td>
+            <a href="./delete/{{contact.id}}">Delete contact</a>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<div class="link">
+<a href="./create">Create contact</a>
+</div>
+{% endblock %}
