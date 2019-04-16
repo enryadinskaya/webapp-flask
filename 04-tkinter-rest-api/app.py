@@ -1,15 +1,17 @@
 import tkinter as tk
-from tkinter import ttk, Menu, Listbox, END
+from tkinter import ttk, Menu, END
 from tkinter import messagebox as msg
-import sqlite3
+
 from flask import Flask
-import threading
 from flask_restful import reqparse, Api, Resource
 import requests
+import sqlite3
+import threading
 
 
 contacts = tk.Tk()
 app = Flask(__name__)
+main_url = "http://localhost:5000/contacts"
 
 def flask_main():
     DATABASE = "data.db"
@@ -120,33 +122,19 @@ def tk_main():
         tel_entered.insert(END, selected_contact[4])
 
 
-    def show_command():
+    def command(command=None):
+        global main_url
+        if command == 'delete':
+            requests.delete(main_url + '/' + str(selected_contact[0]))
+        elif command == 'add':
+            requests.post(main_url, data={'name': name.get(), 'surname': surname.get(), 'mail': mail.get(), 'tel': tel.get()})
+        elif command == 'update':
+            requests.put(main_url + '/' + str(selected_contact[0]), data={'name': name.get(), 'surname': surname.get(), 'mail': mail.get(), 'tel': tel.get()})
         List.delete(0, END)
-        main_url = "http://localhost:5000/contacts"
         req_ob = requests.get(main_url)
         result = req_ob.json()
         for row in result:
             List.insert(END, row)
-
-
-    def delete_command():
-        main_url = "http://localhost:5000/contacts/"
-        requests.delete(main_url + str(selected_contact[0]))
-        show_command()
-
-
-    def update_command():
-        #db.update_contact(selected_contact[0], name.get(), surname.get(), mail.get(), tel.get())
-        main_url = "http://localhost:5000/contacts/"
-        requests.put(main_url + str(selected_contact[0]), data={'name': name.get(), 'surname': surname.get(), 'mail': mail.get(), 'tel': tel.get()})
-        show_command()
-
-
-    def add_command():
-        main_url = "http://localhost:5000/contacts"
-        requests.post(main_url, data={'name': name.get(), 'surname': surname.get(), 'mail': mail.get(), 'tel': tel.get()})
-        #db.create_contact(name.get(), surname.get(), mail.get(), tel.get())
-        show_command()
 
 
     def msgBox():
@@ -228,10 +216,10 @@ def tk_main():
     buttons_frame = tk.Frame(mighty)
     buttons_frame.grid(column=0, row=15, columnspan=2, sticky=tk.W)
     buttons_frame.configure(background='ivory')
-    tk.Button(buttons_frame, text='View all', command=show_command, font=('Comic Sans MS', '10', 'normal')).grid(column=0, row=0, sticky=tk.W, padx=8, pady=8)
-    tk.Button(buttons_frame, text='Add contact', command=add_command, bg='DarkSeaGreen2', font=('Comic Sans MS', '10', 'normal')).grid(column=1, row=0, sticky=tk.W, padx=8, pady=8)
-    tk.Button(buttons_frame, text='Update contact', command=update_command, font=('Comic Sans MS', '10', 'normal')).grid(column=2, row=0, sticky=tk.W, padx=8, pady=8)
-    tk.Button(buttons_frame, text='Delete contact', command=delete_command, bg='RosyBrown1', font=('Comic Sans MS', '10', 'normal')).grid(column=3, row=0, sticky=tk.W, padx=8, pady=8)
+    tk.Button(buttons_frame, text='View all', command=command, font=('Comic Sans MS', '10', 'normal')).grid(column=0, row=0, sticky=tk.W, padx=8, pady=8)
+    tk.Button(buttons_frame, text='Add contact', command=lambda: command('add'), bg='DarkSeaGreen2', font=('Comic Sans MS', '10', 'normal')).grid(column=1, row=0, sticky=tk.W, padx=8, pady=8)
+    tk.Button(buttons_frame, text='Update contact', command=lambda: command('update'), font=('Comic Sans MS', '10', 'normal')).grid(column=2, row=0, sticky=tk.W, padx=8, pady=8)
+    tk.Button(buttons_frame, text='Delete contact', command=lambda: command('delete'), bg='RosyBrown1', font=('Comic Sans MS', '10', 'normal')).grid(column=3, row=0, sticky=tk.W, padx=8, pady=8)
 
 
     contacts.mainloop()
