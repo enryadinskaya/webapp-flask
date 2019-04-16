@@ -7,7 +7,7 @@ contacts = tk.Tk()
 contacts.title('Contacts')
 contacts.resizable(True, True)
 
-main_url = "http://localhost:5000/contacts"
+#main_url = "http://localhost:5000/contacts"
 
 
 class ToolTip(object):
@@ -60,15 +60,14 @@ def get_selected_row(event):
 
 
 def command(command=None):
-    global main_url
     if command == 'delete':
-        requests.delete(main_url + '/' + str(selected_contact[0]))
+        requests.delete(main_url.get() + '/' + str(selected_contact[0]))
     elif command == 'add':
-        requests.post(main_url, data={'name': name.get(), 'surname': surname.get(), 'mail': mail.get(), 'tel': tel.get()})
+        requests.post(main_url.get(), data={'name': name.get(), 'surname': surname.get(), 'mail': mail.get(), 'tel': tel.get()})
     elif command == 'update':
-        requests.put(main_url + '/' + str(selected_contact[0]), data={'name': name.get(), 'surname': surname.get(), 'mail': mail.get(), 'tel': tel.get()})
+        requests.put(main_url.get() + '/' + str(selected_contact[0]), data={'name': name.get(), 'surname': surname.get(), 'mail': mail.get(), 'tel': tel.get()})
     List.delete(0, END)
-    req_ob = requests.get(main_url)
+    req_ob = requests.get(main_url.get())
     result = req_ob.json()
     for row in result:
         List.insert(END, row)
@@ -94,9 +93,14 @@ help_menu = Menu(menu_bar, tearoff=0)
 menu_bar.add_cascade(label="Help", menu=help_menu)
 help_menu.add_command(label='About', command=msgBox)
 
+a_lable = ttk.Label(contacts, text='Url:')
+a_lable.grid(column=0, row=0, sticky=tk.E, padx=3, pady=3)
+main_url = tk.StringVar()
+main_url_entered = ttk.Entry(contacts, width=70, textvariable=main_url)
+main_url_entered.grid(column=1, row=0, sticky=tk.W, padx=3, pady=3)
 
 mighty = tk.LabelFrame(contacts, text='Contact information')
-mighty.grid(column=0, row=0, padx=8, pady=8)
+mighty.grid(row=1, padx=8, pady=8, columnspan=2)
 mighty.configure(background='ivory')
 
 a_lable = ttk.Label(mighty, text='Name:')
